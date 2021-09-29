@@ -1,16 +1,28 @@
 ﻿using System;
-using System.Runtime.InteropServices.WindowsRuntime;
+/*
+ * 
+ * 1.1
+Realizado update para  retornar uma Exception
 
+
+
+*/
 namespace Verificar_Cpf
 {
-  
- 
+
+
     class Program
     {
 
         public static bool Cpf(string cpf)
         {
-            if (cpf.Length != 11) return false;
+
+
+            if (cpf.Length != 11)
+            {
+                throw new ArgumentException("CPF TEM QUE TER 11 DIGITOS");
+                //  return false;
+            }
 
             // Veriricar o Primeiro digito;
 
@@ -35,10 +47,12 @@ namespace Verificar_Cpf
             {
                 if (r != 1 || r != 0)
                 {
-                    
+
                     Console.WriteLine("cpf incorreto parte 1 0");
 
-                    return false;
+                    throw new ArgumentException("CPF INCORRENTO");
+
+                    //  return false;
 
                 }
             }
@@ -50,13 +64,13 @@ namespace Verificar_Cpf
 
                 if (t != r)
                 {
-                   
 
-                    return false;
+                    throw new ArgumentException("CPF INCORRETO");
+                    //return false;
                 }
-            }        
+            }
 
-    // Verificar o segundo digito      
+            // Verificar o segundo digito      
             soma = 0; rest = 0; k = 0;
             for (int cont = 11; cont > 2; cont--)
             {
@@ -76,8 +90,9 @@ namespace Verificar_Cpf
             {
                 if (r != 1 || r != 0)
                 {
-                   
-                    return false;
+
+                    throw new ArgumentException("CPF INCORRETO");
+                    //return false;
 
                 }
 
@@ -86,8 +101,9 @@ namespace Verificar_Cpf
             else
             {
                 if (t != r)
-                {                    
-                    return false;
+                {
+                    throw new ArgumentException("CPF INCORRETO");
+                    // return false;
                 }
             }
 
@@ -98,11 +114,19 @@ namespace Verificar_Cpf
 
         static void Main(string[] args)
         {
-            Console.Write("Digite seu CPF:  ");
-            Console.Write(Cpf(Console.ReadLine()));
 
 
+            try
+            {
+                Console.Write("Digite seu CPF:  ");
+                Console.Write(Cpf(Console.ReadLine()));
 
+            }
+
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }
